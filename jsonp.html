@@ -1,0 +1,38 @@
+<html>
+<head>
+	
+	<title>jsonp测试</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script type="text/javascript" src="jquery-2.1.1.js"></script>
+	<script type="text/javascript">
+	$(function (){
+		 var delay = (function () {
+                var timer = 0;
+                return function (callback, time) {
+                    clearTimeout(timer);
+                    timer = setTimeout(callback, time);
+                };
+            })();
+		
+		$("#inp").on ("input",function (){
+			delay(function(){
+				value=$("#inp").val();
+				$.getJSON("https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+value+"&cb=jsoncallback=?",
+			      function(json){
+			      	$("#content").empty();
+			      	for (var co in json.s)
+			      		$("#content").append(json.s[co]+"<br>");
+			      });
+			     
+			},1000);
+		})
+
+	})
+	</script>
+
+</head>
+<body>
+	<input type='text' name='inp' id='inp'>
+	<div id="content"></div>
+</body>
+</html>
